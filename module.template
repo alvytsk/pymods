@@ -1,0 +1,5 @@
+
+class ModuleTemplate:
+    def __init__(self):
+        self.cfgFilePath = ''
+        self.modArray = []
