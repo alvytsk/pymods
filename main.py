@@ -6,7 +6,10 @@ Module documentation.
 # Imports
 import sys
 from dispatcher import Dispatcher
+import argparse
+
 #import os
+
 
 # Global variables
 
@@ -21,10 +24,12 @@ def main():
     dispatcher.addModule('test1')
     dispatcher.addModule('test2')
 
+    dispatcher.setup('./config.ini')
+
     dispatcher.initModules()
-    dispatcher.startModules()
-    dispatcher.loopModules()
-    dispatcher.stopModules()
+    # dispatcher.startModules()
+    # dispatcher.loopModules()
+    # dispatcher.stopModules()
 
     # Main body
 if __name__ == '__main__':

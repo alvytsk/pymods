@@ -1,5 +1,28 @@
 
+#!/user/bin/env python3 -tt
+
+# Imports
+import sys
+
+
 class ModuleTemplate:
     def __init__(self):
-        self.cfgFilePath = ''
-        self.modArray = []
+        self.state = 'stop'
+        self.moduleName = ''
+
+    def init(self, name):
+        self.moduleName = name
+        self.state = sys._getframe(0).f_code.co_name
+        print(self.moduleName, self.state)
+
+    def start(self):
+        self.state = sys._getframe(0).f_code.co_name
+        print(self.moduleName, self.state)
+
+    def loop(self):
+        self.state = sys._getframe(0).f_code.co_name
+        print(self.moduleName, self.state)
+
+    def stop(self):
+        self.state = sys._getframe(0).f_code.co_name
+        print(self.moduleName, self.state)

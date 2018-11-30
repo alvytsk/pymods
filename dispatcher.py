@@ -2,6 +2,7 @@
 
 # Imports
 import sys
+import configparser
 from test1 import *
 from test2 import *
 # import os
@@ -14,8 +15,15 @@ from test2 import *
 
 class Dispatcher:
     def __init__(self):
-        self.cfgFilePath = ''
         self.modArray = []
+        self.config = configparser.ConfigParser()
+
+    def setup(self, filename):
+        print(filename)
+
+        if self.config.read(filename) == False:
+            print("Could't read config file: ", filename)
+            return False
 
     def addModule(self, name):
         self.modArray.append(name)
@@ -25,7 +33,7 @@ class Dispatcher:
             className = eval(mod[0:].capitalize())
 
             try:
-                getattr(className, 'init')(className, mod)
+                getattr(className, 'init')(className, mod, self.config[mod])
             except AttributeError:
                 raise NotImplementedError("Class `{}` does not implement `{}`".format(
                     'className'.__class__.__name__, 'init'))
