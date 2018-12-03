@@ -3,6 +3,7 @@
 # Imports
 import sys
 import configparser
+import multiprocessing
 from test1 import *
 from test2 import *
 # import os
@@ -16,6 +17,7 @@ from test2 import *
 class Dispatcher:
     def __init__(self):
         self.modArray = []
+        self.processes = []
         self.config = configparser.ConfigParser()
 
     def setup(self, filename):
@@ -39,17 +41,24 @@ class Dispatcher:
             raise NotImplementedError("Class `{}` does not implement `{}`".format(
                 'className'.__class__.__name__, 'init'))
 
+    def runModules(self):
+        self.initModules()
+        self.startModules()
+
+
     def initModules(self):
         for mod in self.modArray:
             self.exec(mod, 'init')
 
     def startModules(self):
         for mod in self.modArray:
-            self.exec(mod, 'start')
+            className = eval(mod[0:].capitalize())
+            t = multiprocessing.Process(target=className.loop, args=())
+            self.processes.append(t)
+            t.start()
 
-    def loopModules(self):
-        for mod in self.modArray:
-            self.exec(mod, 'loop')
+        for one_process in self.processes:
+            one_process.join()
 
     def stopModules(self):
         self.exec(mod, 'stop')

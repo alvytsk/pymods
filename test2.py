@@ -20,13 +20,9 @@ class Test2:
 
         print(self.moduleName, self.state, self.enable, self.output)
 
-    def start(self):
-        self.state = sys._getframe(0).f_code.co_name
-        print(self.moduleName, self.state)
-
     def loop(self):
-        self.state = sys._getframe(0).f_code.co_name
-        print(self.moduleName, self.state)
+        time.sleep(random.randint(1,4))
+        print("[{0}] Hello!".format(self.moduleName))
 
     def stop(self):
         self.state = sys._getframe(0).f_code.co_name
